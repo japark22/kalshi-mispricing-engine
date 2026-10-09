@@ -1,0 +1,11 @@
+__pycache__/
+*.pyc
+.venv/
+.pytest_cache/
+*.egg-info/
+.DS_Store
+# Raw third-party quotes are never committed (see README, "Data and licensing")
+data/raw/
+
+# local copy of workflow files (already placed in .github/workflows)
+github-workflows/

@@ -1,0 +1,18 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "kalshi-mispricing-engine"
+version = "0.1.0"
+description = "Point-in-time comparison of Kalshi S&P 500 range prices with SPX option-implied probabilities"
+requires-python = ">=3.10"
+license = {text = "MIT"}
+dependencies = ["numpy>=2.0", "scipy>=1.11", "pandas>=2.0", "matplotlib>=3.7", "requests>=2.31",
+                "tabulate>=0.9", "option-implied-density"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

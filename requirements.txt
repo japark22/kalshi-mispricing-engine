@@ -1,0 +1,8 @@
+numpy>=2.0
+scipy>=1.11
+pandas>=2.0
+matplotlib>=3.7
+requests>=2.31
+tabulate>=0.9
+# The density engine lives in its own repository:
+option-implied-density @ git+https://github.com/japark22/option-implied-density.git@main

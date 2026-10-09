@@ -1,0 +1,79 @@
+name: collect
+
+# Five intraday snapshots (UTC). In EDT these are 10:45, 12:15, 13:45, 15:05, 15:35 ET;
+# in EST one hour earlier. A stale-chain guard skips holidays and late-starting runs.
+on:
+  schedule:
+    - cron: "45 14 * * 1-5"
+    - cron: "15 16 * * 1-5"
+    - cron: "45 17 * * 1-5"
+    - cron: "5 19 * * 1-5"
+    - cron: "35 19 * * 1-5"
+    - cron: "30 13 * * 1-6"     # next-morning settlement join + report
+  workflow_dispatch:
+    inputs:
+      task:
+        description: "snapshot | settle-report | smoke"
+        default: "smoke"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: collect
+  cancel-in-progress: false
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -r requirements.txt && pip install -e . --no-deps
+      - run: echo "JOB_START=$(date -u +%Y-%m-%dT%H:%M:%S)" >> "$GITHUB_ENV"
+
+      - name: snapshot
+        if: (github.event_name == 'schedule' && github.event.schedule != '30 13 * * 1-6') || inputs.task == 'snapshot'
+        run: python -m kme snapshot || true      # failures are recorded in data/run_log.csv
+
+      - name: settle and report
+        if: github.event.schedule == '30 13 * * 1-6' || inputs.task == 'settle-report'
+        run: |
+          python -m kme settle || true
+          python -m kme report
+
+      - name: smoke
+        if: inputs.task == 'smoke'
+        run: python -m kme smoke
+
+      - name: commit derived data
+        if: inputs.task != 'smoke'
+        run: |
+          git config user.name "kme-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data results
+          git diff --cached --quiet && exit 0
+          git commit -m "data: $(date -u +%Y-%m-%dT%H:%MZ)"
+          for i in 1 2 3; do git pull --rebase && git push && exit 0; sleep $((i*5)); done
+          exit 1
+
+      - name: fail loudly if a stage failed in this run (GitHub then e-mails you)
+        if: inputs.task != 'smoke'
+        run: |
+          python - <<'EOF'
+          import os, sys
+          import pandas as pd
+          p = "data/run_log.csv"
+          if not os.path.exists(p):
+              sys.exit(0)
+          log = pd.read_csv(p)
+          start = pd.Timestamp(os.environ["JOB_START"], tz="UTC")
+          now = log[pd.to_datetime(log["run_time"], utc=True) >= start]
+          bad = now[now["status"] == "failed"]
+          print(now.to_string(index=False))
+          sys.exit(1 if len(bad) else 0)
+          EOF
