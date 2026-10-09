@@ -37,3 +37,8 @@ def main(argv=None):
     print(json.dumps(out, indent=2, default=str))
     if isinstance(out, dict) and out.get("status") == "failed":
         sys.exit(1)
+    if a.cmd == "smoke":
+        broken = [k for k, v in out.items() if isinstance(v, dict) and not v.get("ok", True)]
+        if broken:
+            print(f"smoke failed for: {broken}", file=sys.stderr)
+            sys.exit(1)
