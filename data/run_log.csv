@@ -7,3 +7,5 @@ run_time,stage,status,count,error_summary
 2026-10-09T19:44:19.808987+00:00,snapshot_options,success,29904,asof lag 15.4 min
 2026-10-09T19:44:19.808987+00:00,snapshot_kalshi,success,30,
 2026-10-09T19:44:19.808987+00:00,snapshot_fit,success,30,
+2026-10-09T20:55:34.136896+00:00,snapshot_options,success,29904,asof lag 40.6 min
+2026-10-09T20:55:34.136896+00:00,snapshot_kalshi,failed,0,ValueError: no open markets returned
