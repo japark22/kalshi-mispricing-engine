@@ -12,3 +12,5 @@ run_time,stage,status,count,error_summary
 2026-10-09T21:53:31.542714+00:00,snapshot_options,partial,0,stale chain (99 min since last trade); market closed?
 2026-10-09T23:11:46.212685+00:00,snapshot_options,partial,0,stale chain (177 min since last trade); market closed?
 2026-10-09T23:27:09.912919+00:00,snapshot_options,partial,0,stale chain (192 min since last trade); market closed?
+2026-10-10T17:55:45.643948+00:00,settle,success,1,
+2026-10-10T17:55:47.010919+00:00,report,success,30,
