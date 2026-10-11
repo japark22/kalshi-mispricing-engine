@@ -14,7 +14,7 @@
 4. **Risk premium vs mistake.** Option prices are risk-neutral, so a gap may be compensation for risk rather than an error. A one-parameter pricing-kernel tilt separates the two.
 5. **Power analysis before claims.** Simulation shows that realised outcomes alone cannot identify the tilt at this horizon. With risk aversion θ = 10, the test has **26% power after 2,500 trading days** ([`results/tilt_power.csv`](results/tilt_power.csv)). Inference therefore relies on the tilt implied by *prices*, which carries no outcome sampling noise.
 
-**Engineering.** A GitHub Actions collector runs five times a trading day. Every stage is logged (`success` / `partial` / `failed`), and the report is rebuilt automatically. Inferential sections print "insufficient data" below 40 settled days. A lookahead tripwire flags implausible profits. Raw third-party quotes are never committed.
+**Engineering.** A GitHub Actions collector runs every 15 minutes through the US session. Every stage is logged (`success` / `partial` / `failed`), and the report is rebuilt automatically. Inferential sections print "insufficient data" below 40 settled days. A lookahead tripwire flags implausible profits. Raw third-party quotes are never committed.
 
 > **Status.** The pipeline and its offline tests are complete, and both public APIs are verified live. Collection accumulates in [`results/REPORT.md`](results/REPORT.md). No result in this repository is simulated or estimated by hand.
 
@@ -35,7 +35,7 @@ The usual write-up treats the option-implied probability as the truth and calls 
 ## Design
 
 ```
- every snapshot (5x per US trading day, GitHub Actions)
+ every snapshot (every 15 min in US hours, GitHub Actions)
  ┌──────────────────────────────────────────────────────────────────────────┐
  │ 1. GET Cboe delayed SPX chain; as-of time t_asof = newest trade in it   │
  │ 2. GET Kalshi KXINX open markets (live book, kept as live_* columns)    │
@@ -56,7 +56,7 @@ The usual write-up treats the option-implied probability as the truth and calls 
 - **Synchronised, not just ordered.** The public option feed is about 15 minutes delayed, so comparing it with the live Kalshi book would set a stale distribution against a fresh price and manufacture disagreement whenever the index moves. Kalshi is therefore read **as of the option chain's as-of time**, from the last 1-minute candle that closed at or before it. Kalshi emits candles only in minutes where something changed, so the last close is carried forward and its age is stored. Every run replays the same candles at fetch time and compares them with the live book, and the report shows the agreement rate, so this assumption is tested rather than assumed. The live book is stored separately.
 - Outcomes come from Kalshi's own settlement records. They are joined only for event dates before today (ET). If a settlement level contradicts any contract's result, that event is held back.
 - The historical backfill reads Kalshi from the last 1-minute candle that **closed at or before** the option quote time (`kalshi.quote_at`). A unit test checks this.
-- Stale chains are skipped: if the newest option trade is more than 45 minutes old, there is no snapshot (holidays, late cron runs).
+- Stale chains are skipped: if the newest option trade is more than 45 minutes old, there is no snapshot (holidays, late cron runs). After the close, events already settled as of the option quotes are skipped, and a run that finds no open Kalshi markets is logged as `partial`, not `failed`.
 
 ## The edge funnel
 

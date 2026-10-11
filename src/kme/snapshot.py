@@ -107,6 +107,13 @@ def run_snapshot(fetch_options=fetch_options, fetch_kalshi=fetch_kalshi_open, fe
         km = fetch_kalshi()
         t_decision = now or utcnow()
         if km is None or km.empty:
+            et = t_decision.tz_convert(ET)
+            if et.weekday() >= 5 or et.hour >= 16:
+                # after the close the day's event stops trading: expected, not a failure
+                log_stage("snapshot_kalshi", "partial", 0,
+                          f"no open markets at {et:%H:%M} ET (after the close)", run_time)
+                out["status"] = "skipped_closed"
+                return out
             raise ValueError("no open markets returned")
         today = t_asof.date()
         km = km[km["strike_type"].isin(SUPPORTED) & km["event_date"].notna()].copy()
@@ -131,6 +138,8 @@ def run_snapshot(fetch_options=fetch_options, fetch_kalshi=fetch_kalshi_open, fe
         hhmm = info.get("hhmm", "1600")
         pm_close = f"{hhmm[:2]}:{hhmm[2:]}"
         ev_date = pd.Timestamp(g["event_date"].iloc[0]).date()
+        if pd.Timestamp(f"{ev_date} {pm_close}", tz=ET) <= t_asof:
+            continue        # already settled as of the option quotes (post-close run): nothing to forecast
         try:
             chain = chain_from_table(opts, ev_date, t_asof, root=config.OPTION_ROOT, pm_close=pm_close)
             tu = total_uncertainty(chain, n_boot=n_boot, seed=asof_ts % 10_000)

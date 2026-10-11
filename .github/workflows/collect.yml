@@ -1,14 +1,13 @@
 name: collect
 
-# Five intraday snapshots (UTC). In EDT these are 10:45, 12:15, 13:45, 15:05, 15:35 ET;
-# in EST one hour earlier. A stale-chain guard skips holidays and late-starting runs.
+# Intraday snapshots every 15 minutes, 13:00-20:45 UTC, which covers the US session in
+# both EDT and EST. GitHub delays or drops scheduled runs under load (on the first day,
+# 4 of 5 fixed slots never started), so slots are dense and the collector itself decides:
+# a stale-chain guard skips pre-open, post-close and holiday runs, and the scorer later
+# picks one snapshot per event (the one closest to 120 min before settlement).
 on:
   schedule:
-    - cron: "45 14 * * 1-5"
-    - cron: "15 16 * * 1-5"
-    - cron: "45 17 * * 1-5"
-    - cron: "5 19 * * 1-5"
-    - cron: "35 19 * * 1-5"
+    - cron: "*/15 13-20 * * 1-5"
     - cron: "30 13 * * 1-6"     # next-morning settlement join + report
   workflow_dispatch:
     inputs:
