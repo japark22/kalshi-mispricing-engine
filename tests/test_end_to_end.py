@@ -81,6 +81,19 @@ def test_stale_chain_is_skipped(tmp_project):
     assert out["status"] == "skipped_stale" and read_panel().empty
 
 
+def test_no_open_markets_after_close_is_a_skip_not_a_failure(tmp_project):
+    import kme.kalshi as K
+    d = pd.Timestamp("2026-10-05").date()
+    model, T = world(hours=2.0, seed=0)
+    empty = lambda: K.markets_frame([])                     # noqa: E731
+    for hhmm, expected, logged in [("16:30", "skipped_closed", "partial"), ("14:00", "failed", "failed")]:
+        now_et = pd.Timestamp(f"{d} {hhmm}", tz="America/New_York")
+        payload = cboe_payload(model, T, d, now_et, seed=0)
+        out = run_snapshot(fetch_options=lambda p=payload: p, fetch_kalshi=empty,
+                           now=now_et.tz_convert("UTC"), n_boot=5)
+        assert out["status"] == expected and read_run_log().iloc[-1]["status"] == logged, hhmm
+
+
 def test_failures_are_logged_not_raised(tmp_project):
     def boom():
         raise ConnectionError("blocked")
