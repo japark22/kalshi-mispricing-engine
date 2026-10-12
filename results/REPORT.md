@@ -1,5 +1,5 @@
 # Kalshi vs options: research report
-_Generated 2026-10-10 17:55 UTC by `python -m kme report`. Every figure below is computed from files in `data/`; sections without enough data say so._
+_Generated 2026-10-12 21:48 UTC by `python -m kme report`. Every figure below is computed from files in `data/`; sections without enough data say so._
 
 ## Data coverage
 - Panel rows: 30 (30 live, 0 backfill); rows without a synchronised Kalshi quote: 0
