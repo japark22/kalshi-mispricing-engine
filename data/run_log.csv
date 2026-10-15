@@ -39,3 +39,4 @@ run_time,stage,status,count,error_summary
 2026-10-15T20:28:45.111248+00:00,snapshot_options,success,30470,asof lag 15.1 min
 2026-10-15T20:28:45.111248+00:00,snapshot_kalshi,partial,29,1 of 30 markets lack a synced quote
 2026-10-15T20:28:45.111248+00:00,snapshot_fit,success,30,
+2026-10-15T23:11:23.870631+00:00,snapshot_options,partial,0,stale chain (176 min since last trade); market closed?
