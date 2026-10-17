@@ -49,3 +49,5 @@ run_time,stage,status,count,error_summary
 2026-10-16T19:56:02.277539+00:00,snapshot_kalshi,success,30,
 2026-10-16T19:56:02.277539+00:00,snapshot_fit,success,30,
 2026-10-16T22:20:45.623054+00:00,snapshot_options,partial,0,stale chain (126 min since last trade); market closed?
+2026-10-17T16:33:00.735310+00:00,settle,success,1,
+2026-10-17T16:33:01.732124+00:00,report,success,330,
