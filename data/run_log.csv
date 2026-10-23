@@ -84,3 +84,5 @@ run_time,stage,status,count,error_summary
 2026-10-23T17:35:12.629531+00:00,snapshot_fit,success,30,
 2026-10-23T17:55:16.743606+00:00,settle,success,1,
 2026-10-23T17:55:18.082536+00:00,report,success,630,
+2026-10-23T20:38:21.505447+00:00,snapshot_options,success,29380,asof lag 23.4 min
+2026-10-23T20:38:21.505447+00:00,snapshot_kalshi,partial,0,no open markets at 16:38 ET (after the close)
