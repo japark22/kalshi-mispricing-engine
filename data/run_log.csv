@@ -139,3 +139,5 @@ run_time,stage,status,count,error_summary
 2026-11-05T20:23:27.988830+00:00,snapshot_options,success,29440,asof lag 15.9 min
 2026-11-05T20:23:27.988830+00:00,snapshot_kalshi,success,60,
 2026-11-05T20:23:27.988830+00:00,snapshot_fit,success,60,
+2026-11-05T20:45:35.627791+00:00,settle,success,1,
+2026-11-05T20:45:36.885768+00:00,report,success,1050,
