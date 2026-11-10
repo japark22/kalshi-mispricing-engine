@@ -153,3 +153,6 @@ run_time,stage,status,count,error_summary
 2026-11-09T22:47:33.183561+00:00,snapshot_options,partial,0,stale chain (93 min since last trade); market closed?
 2026-11-09T23:04:06.421458+00:00,settle,success,0,
 2026-11-09T23:04:07.464448+00:00,report,success,1080,
+2026-11-10T20:05:56.696477+00:00,snapshot_options,success,31428,asof lag 15.4 min
+2026-11-10T20:05:56.696477+00:00,snapshot_kalshi,success,60,
+2026-11-10T20:05:56.696477+00:00,snapshot_fit,success,60,
