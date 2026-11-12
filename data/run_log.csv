@@ -164,3 +164,4 @@ run_time,stage,status,count,error_summary
 2026-11-11T19:55:20.866340+00:00,snapshot_fit,success,60,
 2026-11-11T20:16:34.794860+00:00,settle,success,1,
 2026-11-11T20:16:36.029446+00:00,report,success,1200,
+2026-11-12T01:44:22.951179+00:00,snapshot_options,partial,0,stale chain (269 min since last trade); market closed?
