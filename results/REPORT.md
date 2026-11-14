@@ -1,11 +1,11 @@
 # Kalshi vs options: research report
-_Generated 2026-11-13 20:34 UTC by `python -m kme report`. Every figure below is computed from files in `data/`; sections without enough data say so._
+_Generated 2026-11-14 18:47 UTC by `python -m kme report`. Every figure below is computed from files in `data/`; sections without enough data say so._
 
 ## Data coverage
 - Panel rows: 1,290 (1,290 live, 0 backfill); rows without a synchronised Kalshi quote: 24
 - Candle-replay check (candle state at fetch time == live book, live rows): 95.0% of 1,266 rows agree
 - Snapshots: 28; events: 23; first decision 2026-10-09T19:44:21.670578+00:00, last 2026-11-13T20:10:02.628010+00:00
-- Settled events with outcomes: 22
+- Settled events with outcomes: 23
 - Smile model chosen: {'spline': 27, 'svi': 1}
 
 ## Edge funnel
@@ -13,8 +13,8 @@ Stages are cumulative (see `src/kme/edge.py`). Kalshi prices are synchronised to
 
 | stage     |   signals |   contracts_distinct |   event_days |   settled_signals |   settled_days |   mean_pnl |   hit_rate |   daily_mean |   t_stat |
 |:----------|----------:|---------------------:|-------------:|------------------:|---------------:|-----------:|-----------:|-------------:|---------:|
-| naive     |       453 |                  252 |           23 |               399 |             22 |        nan |        nan |          nan |      nan |
-| spread    |        47 |                   45 |           21 |                46 |             20 |        nan |        nan |          nan |      nan |
+| naive     |       453 |                  252 |           23 |               453 |             23 |        nan |        nan |          nan |      nan |
+| spread    |        47 |                   45 |           21 |                47 |             21 |        nan |        nan |          nan |      nan |
 | fees      |        34 |                   34 |           18 |                34 |             18 |        nan |        nan |          nan |      nan |
 | quote_unc |        31 |                   31 |           18 |                31 |             18 |        nan |        nan |          nan |      nan |
 | model_unc |        24 |                   24 |           16 |                24 |             16 |        nan |        nan |          nan |      nan |
