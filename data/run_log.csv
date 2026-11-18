@@ -187,3 +187,6 @@ run_time,stage,status,count,error_summary
 2026-11-17T21:26:40.075856+00:00,snapshot_fit,success,30,
 2026-11-17T21:51:20.464896+00:00,settle,success,0,
 2026-11-17T21:51:21.419416+00:00,report,success,1320,
+2026-11-18T20:58:54.303419+00:00,snapshot_options,success,31580,asof lag 15.3 min
+2026-11-18T20:58:54.303419+00:00,snapshot_kalshi,partial,57,3 of 60 markets lack a synced quote
+2026-11-18T20:58:54.303419+00:00,snapshot_fit,success,60,
