@@ -197,3 +197,4 @@ run_time,stage,status,count,error_summary
 2026-11-19T21:04:32.241547+00:00,snapshot_fit,success,30,
 2026-11-19T21:41:53.582811+00:00,settle,success,1,
 2026-11-19T21:41:54.450793+00:00,report,success,1410,
+2026-11-20T20:51:11.087296+00:00,snapshot_options,failed,0,HTTPError: 403 Client Error: Forbidden for url: https://cdn-api.cboe.com/api/global/delayed_quotes/options/_SPX.json
