@@ -1,8 +1,8 @@
 ## ⚠️ ATTENTION
-- Stage `snapshot_options` failed 4 of its last 6 attempts: HTTPError: 403 Client Error: Forbidden for url: https://cdn-api.cboe.com/api/global/delayed_quotes/options/_SPX.json
+- Stage `snapshot_options` failed 5 of its last 6 attempts: HTTPError: 403 Client Error: Forbidden for url: https://cdn-api.cboe.com/api/global/delayed_quotes/options/_SPX.json
 
 # Kalshi vs options: research report
-_Generated 2026-11-25 22:39 UTC by `python -m kme report`. Every figure below is computed from files in `data/`; sections without enough data say so._
+_Generated 2026-11-26 22:28 UTC by `python -m kme report`. Every figure below is computed from files in `data/`; sections without enough data say so._
 
 ## Data coverage
 - Panel rows: 1,410 (1,410 live, 0 backfill); rows without a synchronised Kalshi quote: 29
